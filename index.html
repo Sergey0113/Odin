@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta http-equiv=" X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Калькулятор">
+  <meta name="autor" content="Segey Uvarov">
+  <title>Калькулятор</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet" />
+
+</head>
+<style>
+
+</style>
+
+<body>
+
+  <div id="container">
+    <div id="displayContainer" class="row">
+      <div id="memoryIcon">M</div>
+      <div id="display" class="row">JAVASCRIPT CALCULATOR</div>
+    </div>
+    <div class="row">
+      <div id="backspace" class="button">►</div>
+      <div id="recallFromMemory" class="button">MR</div>
+      <div id="addToMemory" class="button">M+</div>
+      <div id="changeSign" class="button">±</div>
+    </div>
+    <div class="row">
+      <div class="button">7</div>
+      <div class="button">8</div>
+      <div class="button">9</div>
+      <div id="division" class="button">÷</div>
+    </div>
+    <div class="row">
+      <div class="button">4</div>
+      <div class="button">5</div>
+      <div class="button">6</div>
+      <div id="multiplication" class="button">×</div>
+    </div>
+    <div class="row">
+      <div class="button">1</div>
+      <div class="button">2</div>
+      <div class="button">3</div>
+      <div id="subtraction" class="button">−</div>
+    </div>
+    <div class="row">
+      <div class="button">0</div>
+      <div class="button">.</div>
+      <div id="calculate" class="button">=</div>
+      <div id="addition" class="button">+</div>
+    </div>
+  </div>
+  <div class="over">
+    <span
+      style="color: white; font-size: 56px; font-family: Oswald; font-weight: 500; line-height: 50px; word-wrap: break-word">JAVA
+      SCRIPT CALCULATOR <br></span>
+    <span
+      style="color: white; font-size: 16px; font-family: Oswald; font-weight: 700; line-height: 26.51px; word-wrap: break-word"><br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 400; line-height: 45px; word-wrap: break-word">У
+      него цифровая клавиатура для ввода чисел, кнопка десятичной запятой, кнопка равенства, а также функции сложения,
+      вычитания, умножения и деления.
+      Как и в случае с обычным калькулятором, мы хотим, чтобы пользователь мог складывать к произведению предыдущей
+      функции, а также сохранять число в памяти. Кроме того, было бы неплохо иметь функцию backspace на случай, если вы
+      случайно введете неправильное число, и,
+      возможно, также возможность сделать текущее число положительным или отрицательным.
+      Ниже вы можете ознакомиться с функциями, которые реализованы в конечном продукте.. <br /></span><span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Настройка
+      фронтенда<br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">Cоздадим
+      контейнер div для размещения пяти строк div из пяти кнопок div в знакомом стиле калькулятора. В каждую из кнопок
+      div мы поместим обычный текст, который будет выступать в качестве значения нашей кнопки. Также понадобится
+      место для отображения числа, поэтому добавим еще одну строку вверху.
+
+      Чтобы определить, какую функцию мы хотим использовать для наших вычислений, сделаем так, чтобы каждая
+      кнопка, которая не выводится на дисплей, имела идентификатор, к которому мы можем обратиться
+      позже. Далее, давайте добавим CSS Flexbox, чтобы центрировать все наши текстовые значения в их кнопках и
+      убедиться, что у нас есть хороший большой интерфейс для работы. Теперь, когда есть функциональный интерфейс,
+      приступим к созданию бэкенда.<br /></span><span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Настройка
+      дисплея<br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">Подумаем
+      об основных операциях, которые должен будет выполнять наш код. Первое, что мы хотим, это чтобы значение нажатой
+      кнопки отображалось в верхней части калькулятора. Второе нажатие кнопки должно добавить значение на дисплей, чтобы
+      мы могли связать числа вместе.
+
+      Для этого нам понадобится, чтобы наш код отслеживал любые нажатия кнопок, а это означает, что мы хотим
+      использовать addEventListener().
+
+      В калькуляторе 20 кнопок, поэтому мы не хотим создавать прослушиватель событий для каждой кнопки, поэтому давайте
+      создадим один прослушиватель событий для всего div контейнера. Две переменные,(var calculatorContainer =
+      document.getElementById('container');
+      var calculatorDisplay = document.getElementById('display');
+      calculatorContainer.addEventListener('click', processClick, false);) которые мы хотим сохранить: во-первых,
+      контейнер калькулятора, и во-вторых, отображение калькулятора. Затем мы добавляем прослушиватель событий, который
+      будет ожидать кликов внутри контейнера, а затем запускаем processClick() для каждого клика.<br />processClick()
+      проверит элемент, по которому был сделан щелчок, и определит, имеет ли он имя класса "button". Если это так, то он
+      возьмет текст из кнопки div, а затем добавит текст дисплея в соответствии с ним.
+
+      Однако это означает, что когда мы впервые нажимаем наши кнопки, мы в конечном итоге получим начальный текст нашего
+      дисплея (JAVASCRIPT CALCULATOR) с любыми числами, которые мы вводим, поэтому давайте добавим функцию для очистки
+      дисплея, а затем включим строку в processClick() для очистки дисплея, если там есть открывающий текст.
+
+      Для начала запишем отображаемый текст при загрузке. Обратите внимание, что используется trim для удаления любых
+      пробелов с обеих сторон значения. Затем мы отредактируем processClick, чтобы использовать эту переменную, чтобы
+      проверить, соответствует ли currentDisplayValue (также теперь обрезанный) openingDisplayText, а затем вызовем
+      функцию для очистки отображения (которая вернула пустую строку, так что currentDisplayValue также будет отключен).
+      Сделав clearDisplay функцией, спользуем ее каждый раз, когда обновляем дисплей после выполнения вычислений или
+      нажатия кнопки оператора.
+
+      Наконец, для обработки дисплея ограничим количество цифр до 12, как это делает большинство физических
+      калькуляторов, изменив последнюю строку нашей функции processClick на:(if (currentDisplayValue.length <!-- < -->
+      12) {
+      calculatorDisplay.innerHTML=currentDisplayValue.concat(clickedButtonValue); })</span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word"><br /></span>
+    <span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Добавление
+      операций<br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">
+      Калькулятор не позволяет выполнять операции с нашими числами, поэтому изменим это. Для начала создадим простые
+      функции, которые будут выступать в качестве наших операций:(function addition(firstValue, secondValue) {
+      return firstValue + secondValue;
+      }
+
+      function subtraction(firstValue, secondValue) {
+      return firstValue - secondValue;
+      }
+
+      function multiplication(firstValue, secondValue) {
+      return firstValue * secondValue;
+      }
+
+      function division(firstValue, secondValue) {
+      return firstValue / secondValue;
+      }). Это примерно то, что ожидаем: взять два значения и вернуть результат после вычисления с помощью
+      соответствующего оператора.
+
+      Далее нужно подумать о том, как мы передадим эти значения в функцию. Для выполнения расчета с помощью
+      калькулятора требуется минимум четыре нажатия кнопок: первое число, оператор, второе число и равные. Таким
+      образом, нам нужно хранить по крайней мере первое число и оператор до тех пор, пока пользователь не нажмет
+      кнопку равенства. Создадим переменные для обработки этого:(var firstValue, operator, secondValue; ). Все
+      кнопки, которые не должны добавляться к дисплею, имеют идентификаторы с именем функции, которую мы ожидаем
+      использовать, поэтому мы можем модифицировать нашу функцию processClick так, чтобы клики из div с
+      идентификаторами присваивали отображаемое значение firstValue, а операцию оператору. аким образом, если
+      выбранный элемент является кнопкой, но не имеет идентификатора, processClick передаст идентификатор элемента в
+      prepareOperation. На данный момент эта новая функция просто присваивает оператор и значение display нашему
+      объекту variableList.
+
+      Далее нужно рассмотреть, что происходит, когда есть первое значение и операторы, поставленные в очередь, и мы
+      вводим второе значение и нажимаем кнопку равенства. Это самое простое взаимодействие пользователя с
+      калькулятором. Будем рассматривать оператор equals (id: calculate) как условие в prepareOperation. Поэтому,
+      когда elementId "calculate", мы получаем secondValue, а затем ищем оператор в текущем окне, который позволяет
+      нам проверить, является ли он допустимой функцией, и выполнить его. Затем, когда мы закончим, мы присваиваем
+      результат дисплею и сбрасываем наши переменные.
+
+      Однако теперь у нас есть число на дисплее, и когда мы в следующий раз нажимаем число, оно просто добавляется к
+      результату, а не начинает новое вычисление. Итак, давайте вернемся к тому, как мы обрабатываем это, и
+      используем логический флаг, чтобы определить, когда разрешать добавления, а когда мы должны очистить экран.
+      Таким образом, теперь каждый раз, когда страница загружается, она начинается с clearDisplayFlag, имеющего
+      значение true, что решает проблему добавления к нашему заголовку. Затем мы также переключаем флаг в true,
+      когда сбрасываем наши переменные после нажатия кнопки equals. Наконец, после того, как функция processClick
+      вызывает clearDisplay, она переключает флаг в false, чтобы цифры можно было снова добавлять.<br /></span>
+    <span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Операции
+      объединения в цепочку<br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">Когда
+      вы используете калькулятор, вы не ограничиваетесь одним расчетом, вместо этого вы можете продолжать работать с
+      результатами предыдущих расчетов. Например, если я нажму 1 + 1 + 1 + 1, а затем =, я должен получить 4. В
+      нашем калькуляторе на данный момент все, что мы получаем, это переназначения первого значения и оператора до
+      тех пор, пока конечная 1 не будет добавлена в качестве второго значения, поэтому мы получаем 2.
+
+      Мы должны вычислить результат, отправить его на дисплей и присвоить ему первое значение (вместе с оператором),
+      чтобы мы могли продолжить цепочку. Это означает, что нам нужно переписать нашу функцию prepareOperation.
+      Теперь prepareOperation проверяет, определено ли firstValue, и если да, то запускает вычисление (теперь в
+      отдельной функции performCalculation), после чего обновит некоторые или все переменные в зависимости от
+      последней нажатой кнопки оператора.
+
+      Таким образом, теперь мы можем подсчитывать и объединять наши операции. Давайте добавим несколько функций для
+      наших финальных кнопок: вызов памяти, добавление в память, переключение знаков и backspace.<br /></span>
+    <span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Изменение
+      отображаемого значения<br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">Прежде
+      чем мы сделаем что-либо еще, давайте наведем порядок в processClick. Именно отсюда нам нужно вызывать
+      последние четыре функции, чтобы они не обрабатывались как вычисление. Давайте также извлечем некоторые другие
+      результаты условий в их собственные функции и изменим processClick так, чтобы он использовал условие switch,
+      чтобы сделать его более читабельным. Во-первых, backspace. Мы можем использовать подстроку, чтобы удалить
+      последний символ из отображения.Далее меняем знак. Это, наверное, самый простой. Нам нужно будет проверить,
+      является ли первый символ на дисплее знаком минус, и если нет, добавить его в начало или удалить. Теперь
+      давайте разберемся с кнопками, связанными с памятью, так как они добавляют некоторые дополнительные сложности
+      в наш пользовательский интерфейс.<br /></span>
+    <span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Операции
+      с памятью<br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">У
+      большинства калькуляторов на дисплее есть маленькая буква M, которая говорит о том, что у вас есть значение в
+      памяти. В настоящее время у нас нет места для этого на нашем дисплее, поэтому давайте добавим его. Я нашел это
+      на pxhere. Поэтому мы переделали дисплей в display_container и display, а затем добавили memory_icon div.
+      Давайте поместим текст "M" в div, пока мы накладываем иконку на дисплей с помощью некоторых трюков CSS, затем
+      мы будем использовать "display: none;", чтобы скрыть его. При этом значок перемещается над дисплеем и не
+      вызывает смещения на дисплее. Теперь нам просто нужен наш Javascript, чтобы переключить видимость значка и
+      сохранить значение в памяти. Мы также хотим убедиться, что он не будет работать до тех пор, пока число не
+      будет введено в калькулятор: мы не хотим, чтобы он сохранял «JAVASCRIPT CALCULATOR». Хорошо, теперь перейдем к
+      нашей последней функции, recallFromMemory. Мы хотим, чтобы он проверял, присвоено ли memoryValue значение, а
+      затем выводил его на экран. И это все функции, которые мы планировали. Есть и другие вещи, которые мы могли бы
+      добавить: пи, экспоненциалы, проценты, все, что вы можете пожелать. Но давайте остановимся на этом и просто
+      быстро оформим калькулятор так, чтобы он был чем-то, чем мы можем быть довольны.
+      <br /></span>
+    <span
+      style="color: white; font-size: 20px; font-family: Oswald; font-weight: 500; line-height: 33.14px; word-wrap: break-word"><br /></span><span
+      style="color: white; font-size: 27px; font-family: Oswald; font-weight: 700; line-height: 44.74px; word-wrap: break-word">Штрихи<br /><br /></span><span
+      style="color: white; font-size: 29px; font-family: Roboto; font-weight: 500; line-height: 45px; word-wrap: break-word">Я
+      не буду слишком подробно останавливаться на стилистике финального дизайна. Я хотел, чтобы на столе было что-то
+      похожее на физический объект, поэтому сначала я добавил изображение стола на фон. Чтобы калькулятор
+      соответствовал своему шикарному фону, он должен был выглядеть чуть менее плоским и матовым. Я использовал
+      CSSMatic Gradient Generator с цветами, выпавшими из MacBook слева на изображении, а затем настроил аналогичный
+      эффект теней от Vanseo Design, пока не получил то, что искал. Затем я хотел, чтобы мой дисплей выглядел как
+      ЖК-экран. К сожалению, существует не так много хороших веб-шрифтов для ЖК-дисплеев, которые не требуют их
+      переупаковки на вашем сайте, но я использовал популярный шрифт Google Roboto. Я хотел, чтобы цифры были
+      крупными и жирными, но заголовок оказался слишком большим, чтобы уместиться в одну строку. Чтобы это
+      исправить, я сделал font-size намного меньше в CSS-файле и настроил размер шрифта дисплея в функции
+      clearDisplay. Последнее, что я хотел сделать, это придать кнопкам немного набивки и слегка вытянутый вид.
+      Здесь я использовал генератор кнопок CSS3 на CSS Portal, чтобы получить желаемый эффект.<br /></span>
+  </div>
+  <div class="content"><a href="pages\index calculator7.html" target="_blank">
+      <h2 style="color: white;">ПОСЧИТАТЬ на другом калькуляторе</h2>
+    </a></div>
+  <script>
+    var calculatorContainer = document.getElementById('container');
+    var calculatorDisplay = document.getElementById('display');
+    var memoryIcon = document.getElementById('memoryIcon');
+    var clearDisplayFlag = true;
+    var firstValue, operator, secondValue, memoryValue;
+
+    calculatorContainer.addEventListener('click', processClick, false);
+
+    function processClick(e) {
+      if (e.target.className === 'button') {
+        switch (e.target.id) {
+          case 'backspace':
+            backspace();
+            break;
+          case 'changeSign':
+            changeSign();
+            break;
+          case 'addToMemory':
+            addToMemory();
+            break;
+          case 'recallFromMemory':
+            recallFromMemory();
+            break;
+          case '':
+            appendValue(e.target.innerHTML.trim());
+            break;
+          default:
+            prepareOperation(e.target.id);
+        }
+      }
+    }
+
+    function appendValue(newValue) {
+      let currentDisplayValue = calculatorDisplay.innerHTML.trim();
+      if (clearDisplayFlag) {
+        currentDisplayValue = clearDisplay();
+        clearDisplayFlag = false;
+      }
+      if (currentDisplayValue.length < 12) {
+        calculatorDisplay.innerHTML = currentDisplayValue.concat(newValue);
+      }
+    }
+
+    function clearDisplay() {
+      clearedValue = '';
+      calculatorDisplay.innerHTML = clearedValue;
+      calculatorDisplay.style.fontSize = '40px';
+      return clearedValue;
+    }
+
+    function prepareOperation(elementId) {
+      if (firstValue) {
+        result = performCalculation(elementId);
+        if (result) {
+          calculatorDisplay.innerHTML = result;
+          if (elementId === 'calculate') {
+            resetVariableList();
+          } else {
+            firstValue = result;
+            operator = elementId;
+            clearDisplayFlag = true;
+          }
+        }
+      } else {
+        operator = elementId;
+        firstValue = getDisplayValue();
+        clearDisplayFlag = true;
+      }
+    }
+
+    function getDisplayValue() {
+      let currentDisplayValue = calculatorDisplay.innerHTML.trim();
+      return parseFloat(currentDisplayValue);
+    }
+
+    function addition(firstValue, secondValue) {
+      return firstValue + secondValue;
+    }
+
+    function subtraction(firstValue, secondValue) {
+      return firstValue - secondValue;
+    }
+
+    function multiplication(firstValue, secondValue) {
+      return firstValue * secondValue;
+    }
+
+    function division(firstValue, secondValue) {
+      return firstValue / secondValue;
+    }
+
+    function backspace() {
+      let currentDisplayValue = calculatorDisplay.innerHTML.trim();
+      let backspacedValue = currentDisplayValue.length - 1;
+      calculatorDisplay.innerHTML = currentDisplayValue.substring(0, backspacedValue);
+    }
+
+    function changeSign() {
+      let currentDisplayValue = calculatorDisplay.innerHTML.trim();
+      if (currentDisplayValue[0] == '-') {
+        calculatorDisplay.innerHTML = currentDisplayValue.substring(1);
+      } else {
+        calculatorDisplay.innerHTML = '-'.concat(currentDisplayValue);
+      }
+    }
+
+    function addToMemory() {
+      if (calculatorDisplay.innerHTML.trim() != 'JAVASCRIPT CALCULATOR') {
+        memoryValue = getDisplayValue();
+        memoryIcon.style.display = 'block';
+        clearDisplayFlag = true;
+      }
+    }
+
+    function recallFromMemory() {
+      if (memoryValue) {
+        calculatorDisplay.innerHTML = memoryValue;
+      }
+    }
+
+    function performCalculation() {
+      secondValue = getDisplayValue();
+      let function_name = window[operator];
+      if (typeof function_name === 'function') {
+        return function_name(firstValue, secondValue);
+      } else {
+        resetVariableList();
+        return false;
+      }
+    }
+
+    function resetVariableList() {
+      firstValue = undefined;
+      secondValue = undefined;
+      operator = undefined;
+      clearDisplayFlag = true;
+    }
+
+  </script>
+
+</body>
+
+</html>
